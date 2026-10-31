@@ -7,3 +7,5 @@ __pycache__/
 # Run output (README, section 4)
 output/
 smoke/
+figures/figure_4_9.pdf
+figures/figure_4_9.png

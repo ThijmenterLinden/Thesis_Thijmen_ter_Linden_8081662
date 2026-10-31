@@ -76,13 +76,22 @@ Python 3.12 with the package versions the thesis runs were made with (pyarrow is
 only adds the parquet copy of file 03):
 
     python -m venv .venv && source .venv/bin/activate
-    pip install numpy==2.5.1 pandas==3.0.3 scipy==1.18.0 power-grid-model==1.13.107 pyarrow==24.0.0
+    pip install numpy==2.5.1 pandas==3.0.3 scipy==1.18.0 power-grid-model==1.13.107 pyarrow==24.0.0 matplotlib==3.11.1
 
 Then, from the root of the repository:
 
     python code/p2p_voltage.py --smoke          # one combination with 5 runs, 4 grid points and their decomposition; about 10 s; writes smoke/
     python code/p2p_voltage.py --full           # Scenario 1 and Scenario 2; about 40 minutes on a laptop; writes output/ (about 230 MB)
     python code/p2p_voltage.py --decomposition  # the four demand states of every Scenario 2 point; about 5 minutes; writes output/
+
+One figure of the thesis can be drawn from the output, so that the result can be compared with
+the thesis directly. After `--full`:
+
+    python figures/figure_4_9.py                # Figure 4.9 of the thesis from output/06_scenario_grid.csv; writes figures/figure_4_9.pdf and .png
+
+Figure 4.9 is the rural compliance ratio post-2027 against pre-2027, one marker per run of
+Scenario 2. The script draws it in the style and at the size of the thesis figure, and the
+thesis figure itself is included as `figures/figure_4_9_thesis.pdf` for the comparison.
 
 Output files, all CSV, one directory:
 
@@ -107,6 +116,7 @@ requirement, the absolute requirement and the endpoint check to these files.
 | power-grid-model (the power-flow solver, Newton-Raphson) | 1.13.107 |
 | numpy / pandas / scipy | 2.5.1 / 3.0.3 / 1.18.0 |
 | pyarrow (the parquet copy of file 03 only) | 24.0.0 |
+| matplotlib (figures/figure_4_9.py only) | 3.11.1 |
 | Operating system of the thesis runs | macOS 15 (Darwin 24.6) |
 
 AI assistance: the author used Claude Code (Anthropic) during the development of the code and
@@ -119,7 +129,7 @@ The thesis results were produced by the same calculation spread over several fil
 Excel workbook as the parameter source and with validation checks, a run manifest, statistics
 and figure stages around it. This file keeps the calculation and leaves the rest out: the
 workbook reader is replaced by the constants of section 1; the checks, the manifest, the
-statistics and the figures are gone; the step functions, the two scenario loops and the
+statistics and the figures are gone, except the one figure script of section 4; the step functions, the two scenario loops and the
 decomposition are the original code. The file was checked against the stored run of 22
 September 2026: the smoke run, one full combination of 1000 runs (all five Scenario 1 output
 files), a Scenario 2 subset of 77 grid points (231 rows) and a decomposition subset of 18 grid
